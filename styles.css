@@ -1,0 +1,98 @@
+html,body{
+    padding: 0;
+    margin: 0;
+}
+
+
+.navbar{
+    
+    /* display: block; */
+    background-color: aquamarine;
+    padding: 12px 14px;
+    border: solid black thin ;
+}
+
+.navbar a{
+    margin-right: 4px;
+    color: black;
+}
+.navbar a:hover{
+    background-color: rgb(74, 171, 171);
+    padding: 12px 14px;
+}
+.intro{
+    display: flex;
+   align-content: center;
+    text-align: center;
+    margin-block: black;
+    border: solid black thin ;
+    padding: auto;
+}
+.intro a{
+    text-align: center;
+    padding-left: 200px;
+    padding-top: 60px;
+}
+.intro img{
+    width: 300px;
+}
+.about{
+    display: flex;
+    padding-top: 0px;
+    text-align: center;
+    background-color: antiquewhite;
+    
+
+}
+
+.aboutme{
+    margin: 0px;
+    text-align: center;
+    background-color: antiquewhite;
+    padding-bottom: 30px;
+    border: solid black thin ;
+}
+
+.details{
+    border: solid black thin ;
+    text-align: center;
+    background-color: aliceblue;
+   
+    padding-bottom: 50px;
+}
+.cont{
+    display: flex;
+    padding-left: 20px;
+}
+.cont img{
+    display: flex;
+    width: 80px;
+    height: 70px;
+    padding-top: 20px;
+    padding-left: 150px;
+    text-align: center;
+}
+.conta a{
+    padding-left: 174px;
+}
+.number{
+    text-align: center;
+}
+#skills{
+    text-align: center;
+}
+#img a{
+    display: flex;
+    width: 250px;
+    height: 200px;
+    padding-left: 150px;
+    padding-top: 50px;
+    /* text-align: center; */
+    padding-bottom: 50px;
+}
+.services{
+    text-align: center;
+}
+.cpp{
+    padding-right: 50px;
+}
