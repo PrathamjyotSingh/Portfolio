@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { education, experience, projects, skills, achievements,contact } from '@/lib/data';
-
+const modelId = process.env.MODEL_ID || "google/gemma-7b-it";
 function getRelevantContext(prompt?: string) {
   if (!prompt) return 'No relevant context provided.';
 
@@ -123,7 +123,7 @@ ${prompt}
       return res.status(200).json({ answer: data.response });
     } else {
       // 🌐 Production: Gemma via Hugging Face
-      const hfRes = await fetch('https://api-inference.huggingface.co/models/google/gemma-2b-it', {
+      const hfRes = await fetch(`https://api-inference.huggingface.co/models/${modelId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
