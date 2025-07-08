@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+.next/
+.env
+.DS_Store
+
+# system
+Thumbs.db
+.vscode/
+
+# build output
+dist/
+build/
+out/
+
+
+models/
+*.bin
+*.node

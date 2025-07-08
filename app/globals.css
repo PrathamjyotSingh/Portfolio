@@ -1,0 +1,317 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add custom styles in a @layer block */
+@layer components {
+  .nav-link {
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #fdfdfd;
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+  @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+}
+
+a {
+  transition: all 0.2s ease-in-out;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+/* Rounded image border glow on hover */
+img.rounded-full:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
+}
+
+/* Custom nav link hover style */
+.nav-link {
+  transition: color 0.2s ease;
+  @apply hover:text-blue-600 transition;
+}
+
+.nav-link:hover {
+  color: #2563eb; /* Tailwind blue-600 */
+  text-decoration: underline;
+}
+
+
+/* Scrollable Flex Grid */
+.project-scroll {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 2rem 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.project-scroll::-webkit-scrollbar {
+  height: 10px;
+}
+.project-scroll::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 8px;
+}
+.project-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.project-card img {
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+/* Project Card */
+.project-card {
+  min-width: 320px;
+  max-width: 360px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,248,255,0.6));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Gradient glow ring */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -40%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle at top right, rgba(96,165,250,0.15), transparent);
+  z-index: 0;
+}
+.project-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography */
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+.project-duration {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.project-description {
+  font-size: 0.95rem;
+  color: #374151;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.project-description p {
+  margin-bottom: 0.4rem;
+}
+
+/* Tech Stack Tag */
+.project-stack {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1e40af;
+  background-color: #e0f2fe;
+  border-left: 4px solid #3b82f6;
+  padding: 0.4rem 0.7rem;
+  border-radius: 0.375rem;
+  display: inline-block;
+  margin-top: auto;
+}
+
+/* Dark mode overrides */
+.dark .project-title { color: #f3f4f6; }
+.dark .project-description { color: #d1d5db; }
+.dark .project-duration { color: #9ca3af; }
+.dark .project-stack {
+  background-color: #1e3a8a;
+  color: #e0f2fe;
+  border-left-color: #60a5fa;
+}
+
+
+
+
+
+
+/* About Page */
+.about-section {
+  max-width: 700px;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  background: linear-gradient(to right, #fefefe, #f8fafc);
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(4px);
+  padding: 2.5rem;
+}
+
+.about-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #374151;
+}
+
+
+
+
+
+/* Education Card Style */
+.education-card {
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.education-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+
+
+
+
+.experience-card {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+
+
+
+
+.skill-pill {
+  background-color: #f0f9ff;
+  color: #0369a1;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  display: inline-block;
+  transition: background-color 0.2s ease;
+}
+
+.skill-pill:hover {
+  background-color: #e0f2fe;
+}
+
+
+
+
+
+
+
+
+
+
+.achievement-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.achievement-item {
+  position: relative;
+  padding-left: 2.2rem; /* Increased to make room for emoji */
+  font-size: 1rem;
+  color: #1f2937;
+  background-color: #f9fafb;
+  border-left: 4px solid #3b82f6;
+  border-radius: 0.375rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-right: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.achievement-item::before {
+  content: '🎯';
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+}
+
+
+
+
+
+
+/* Optional markdown styling override */
+.prose code {
+  background-color: #f3f4f6;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+}
+
+
+
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2563eb; /* Tailwind blue-600 */
+  font-weight: 500;
+  transition: transform 0.2s ease-in-out;
+}
+
+.dark .social-link {
+  color: #60a5fa; /* Tailwind blue-400 */
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  text-decoration: underline;
+}
