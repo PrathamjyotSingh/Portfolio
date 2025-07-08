@@ -80,6 +80,9 @@ if (
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const prompt = req.body?.prompt;
+  if (process.env.NODE_ENV === 'development') {
+  console.log("🔑 MODEL_ID:", process.env.MODEL_ID);
+}
 
   if (!prompt || typeof prompt !== 'string') {
     return res.status(400).json({ error: 'Missing or invalid prompt' });
