@@ -58,7 +58,7 @@ export default function HomePage() {
               <div className="flex items-center justify-center mb-2">
                 <Trophy className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 dark:text-white">Expert</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">3x Expert</div>
               <div className="text-sm text-gray-600 dark:text-gray-400">Kaggle</div>
             </div>
           </div>
@@ -81,11 +81,13 @@ export default function HomePage() {
               🤖 Ask AI Assistant
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            
-            <button className="group inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">
+            <a
+              href="/uploads/CV.pdf"
+              download
+              className="group inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">
               <Download className="w-4 h-4" />
               Download CV
-            </button>
+            </a>
           </div>
         </div>
 

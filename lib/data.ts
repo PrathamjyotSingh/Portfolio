@@ -12,17 +12,6 @@ export const education = [
 
 export const experience = [
   {
-    title: "Kaggle Expert",
-    organization: "Kaggle",
-    location: "Remote",
-    duration: "Ongoing",
-    description: [
-      "Achieved Kaggle Expert status in Datasets, Notebooks, and Discussions.",
-      "Ranked under 800 in Notebooks, Discussions, and under 400 in Datasets (as of Feb 22, 2025).",
-      "Contributed high-quality datasets and notebooks, actively engaged in community learning."
-    ]
-  },
-  {
   title: "Researcher",
   organization: "ISMS 2024-25 — 7th International Conference on Information Systems and Management Science",
   location: "Remote",
@@ -46,7 +35,17 @@ export const experience = [
     "The paper was accepted among the top 35% of submissions and will be published in the IEEE Xplore digital library.",
     "Authors: Prathamjyot Singh, Dr. Sanjeev Rao, Dr. Jasmeet Singh, Yugan Dhar, Moksh Sharma, Pranav Chawla"
   ]
-}
+},{
+    title: "Kaggle Expert",
+    organization: "Kaggle",
+    location: "Remote",
+    duration: "Ongoing",
+    description: [
+      "Achieved Kaggle Expert status in Datasets, Notebooks, and Discussions.",
+      "Ranked under 800 in Notebooks, Discussions, and under 400 in Datasets (as of Feb 22, 2025).",
+      "Contributed high-quality datasets and notebooks, actively engaged in community learning."
+    ]
+  },
 
 ];
 

@@ -53,7 +53,7 @@ export default function AchievementsPage() {
           
           <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-              Expert
+              3x Expert
             </div>
             <div className="text-gray-600 dark:text-gray-300 text-sm">
               Kaggle Tier
@@ -71,7 +71,7 @@ export default function AchievementsPage() {
           
           <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
-              5+
+              3+
             </div>
             <div className="text-gray-600 dark:text-gray-300 text-sm">
               Publications
@@ -153,7 +153,7 @@ export default function AchievementsPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="/contact"
+              href="/about"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-medium shadow-lg"
             >
               Get in Touch
