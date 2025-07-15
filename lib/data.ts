@@ -17,9 +17,9 @@ export const experience = [
   location: "Remote",
   duration: "Jan 2025",
   description: [
-    "Authored the research paper *“Early Detection of Forest Fire Using Fine-tuned MobileNetV2: A Lightweight Deep Learning Approach.”*",
+    "Co-authored the research paper *“Early Detection of Forest Fire Using Fine-tuned MobileNetV2: A Lightweight Deep Learning Approach.”*",
     "Focused on creating a lightweight model suitable for low-resource, fire-prone environments where early detection is critical.",
-    "Presented the work at ISMS 2024-25 (Feb 22–23, 2025).",
+    "Presented the work at ISMS 2024-25 (Feb 22-23, 2025).",
     "Published in SCOPUS-indexed Springer LNNS proceedings.",
     "Authors: Prathamjyot Singh, Dr. Sanjeev Rao, Yugan Dhar, Moksh Sharma"
   ]

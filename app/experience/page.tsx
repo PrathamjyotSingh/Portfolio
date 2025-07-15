@@ -1,6 +1,11 @@
 import { experience } from '@/lib/data';
 import { MapPin, Calendar, Building, Award, ArrowRight } from 'lucide-react';
 
+
+
+// 📌 At the top of your ExperiencePage component:
+const uniqueRoles = Array.from(new Set(experience.map((exp) => exp.title)));
+
 export default function ExperiencePage() {
   return (
     <section className="px-4 py-12 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 min-h-screen">
@@ -113,7 +118,7 @@ export default function ExperiencePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-              {experience.length}+
+              {uniqueRoles.length}+
             </div>
             <div className="text-gray-600 dark:text-gray-300">
               Professional Roles
@@ -131,7 +136,7 @@ export default function ExperiencePage() {
           
           <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
             <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
-              50+
+              12+
             </div>
             <div className="text-gray-600 dark:text-gray-300">
               Projects Completed

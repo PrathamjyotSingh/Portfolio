@@ -12,7 +12,7 @@ export default function ProjectsPage() {
           Featured Work
         </div>
         
-        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 dark:from-blue-400 dark:via-purple-400 dark:to-blue-600 bg-clip-text text-transparent mb-6">
+        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 dark:from-blue-400 dark:via-purple-400 dark:to-blue-600 bg-clip-text text-transparent mb-6 pb-2">
           My Projects
         </h1>
         
@@ -144,30 +144,42 @@ export default function ProjectsPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="max-w-4xl mx-auto text-center mt-20 p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
-        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          Interested in collaborating?
-        </h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-6">
-          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link
-            href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-          >
-            Let's Connect
-            <ExternalLink className="w-4 h-4" />
-          </Link>
-          <Link
-            href="/chat"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors font-medium"
-          >
-            Ask AI Assistant
-            <Sparkles className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
+      {/* Bottom CTA */}
+<div className="max-w-4xl mx-auto text-center mt-20 p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+  <p className="text-sm uppercase tracking-widest text-blue-600 dark:text-blue-400 font-semibold mb-2">
+    Have an idea or challenge?
+  </p>
+
+  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+    I'm working on many other exciting projects!
+  </h3>
+
+  <p className="text-gray-600 dark:text-gray-300 mb-2">
+    From LLM tools to real-time AI systems, there's always something brewing.  
+  </p>
+
+  <p className="text-gray-600 dark:text-gray-300 mb-6">
+    I'm always open to discussing new projects, research collaborations, or creative ideas you want to bring to life.
+  </p>
+
+  <div className="flex flex-wrap justify-center gap-4">
+    <Link
+      href="/about"
+      className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+    >
+      Let’s Connect
+      <ExternalLink className="w-4 h-4" />
+    </Link>
+    <Link
+      href="/chat"
+      className="inline-flex items-center gap-2 px-6 py-3 border border-blue-600 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors font-medium"
+    >
+      Ask AI Assistant
+      <Sparkles className="w-4 h-4" />
+    </Link>
+  </div>
+</div>
+
     </section>
   );
 }
