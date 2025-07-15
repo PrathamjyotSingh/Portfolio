@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Sparkles, Bot } from 'lucide-react';
 
 export default function AssistantPage() {
   const [question, setQuestion] = useState('');
@@ -17,103 +18,91 @@ export default function AssistantPage() {
     "List your achievements.",
   ];
 
-const predefinedAnswers: Record<string, string> = {
-  "what are your key skills?": `
+  const predefinedAnswers: Record<string, string> = {
+    "what are your key skills?": `
 Hi there! As **Prathamjyot Singh**, I specialize in the following:
 
 **🧑‍💻 Programming Languages:** Python, TensorFlow, PyTorch, C++, C, HTML/CSS, JavaScript, SQL  
 **🛠️ Tools and Frameworks:** Kaggle, Ollama, LangChain, RAG, Hugging Face, Msty, VS Code, Jupyter Notebook, Firebase, MATLAB  
 **📌 Domain Expertise:** Large Language Models (LLMs), Generative AI, Machine Learning, Deep Learning, NLP, Web Dev, DSA
-  `,
+    `,
 
-  "tell me about your projects.": `
+    "tell me about your projects.": `
 🚀 **Highlighted Projects**
 
-1. **RecruitMate – Competitive Coding Platform** (Sept–Dec 2024)  
+1. **RecruitMate – Competitive Coding Platform**  
    • Full-stack app with team management for coding contests  
    • Firebase Auth, Firestore, chat, and email notifications  
-   • Role-based UI dashboard  
 
-2. **LLM-Based Research Paper Summarizer** (Feb 2025)  
-   • Built using fine-tuned GEMMA + LoRA + quantization  
-   • Transformer summarization with PyMuPDF PDF parsing  
-   • Deployed on Streamlit  
+2. **LLM-Based Research Paper Summarizer**  
+   • Fine-tuned GEMMA + LoRA + quantization  
+   • Summarization with PyMuPDF + Streamlit  
 
-3. **Brain Tumor Segmentation** (Ongoing)  
-   • Hybrid DL model using Transformer + CBAM  
-   • >99% accuracy on BraTS dataset  
-   • Research paper in preparation  
+3. **Brain Tumor Segmentation**  
+   • Transformer + CBAM hybrid  
+   • >99% accuracy on BraTS  
 
-4. **AI-Powered Courtroom Monitoring System** (Ongoing)  
-   • Real-time ASR + BART summarization for legal audio  
-   • Speaker diarization and transcript archiving  
-   • Built for legal documentation automation
-  `,
+4. **Courtroom Monitoring System**  
+   • Real-time ASR + BART for legal audio  
+   • Transcript archival + speaker diarization
+    `,
 
-  "what research have you published?": `
+    "what research have you published?": `
 🧠 **Research Publications**
 
-1. 📄 *"AI-Driven Legal Summarization: A Hybrid Framework Integrating Automatic Speech Recognition, Diarization, and BART for Courtroom Proceedings"*  
-   - Co-authored and accepted at **IC3 2025 – 17th International Conference on Contemporary Computing**
-   - Focus: Automated legal documentation using ASR + speaker diarization + BART summarization
-   - 📚 Will be published in **IEEE Xplore**
-   - 🏅 Among the top 35% accepted submissions
+1. 📄 *AI-Driven Legal Summarization* — **IC3 2025**  
+   • ASR + diarization + BART for courtroom proceedings  
+   • Accepted to IEEE Xplore
 
-2. 🔥 *"Early Detection of Forest Fire Using Fine-tuned MobileNetV2: A Lightweight Deep Learning Approach"*  
-   - Presented at **ISMS 2025 – 7th International Conference on Information Systems and Management Science**
-   - Focus: Lightweight CNN-based models for early fire detection in low-resource regions
-   - 📚 Published in **SCOPUS-indexed Springer LNNS proceedings**
-   - 👥 Co-authors: Sanjeev Rao, Yugan Dhar, Moksh Sharma
-  `,
+2. 🔥 *Forest Fire Detection Using MobileNetV2* — **ISMS 2025**  
+   • SCOPUS-indexed Springer LNNS  
+   • Lightweight DL for resource-limited areas
+    `,
 
-  "which tools or frameworks do you use?": `
-🧰 **Tools & Frameworks I Use**
+    "which tools or frameworks do you use?": `
+🧰 **Tools I Use**
 
-• **LLM Tools:** Hugging Face, LangChain, Ollama, RAG  
-• **Frontend/Backend:** HTML/CSS/JS, Flask, Firebase  
-• **ML/DL Frameworks:** TensorFlow, PyTorch, GEMMA, LoRA  
-• **Developer Tools:** VS Code, Kaggle, Jupyter Notebook, Streamlit
-  `,
+• LLM: Hugging Face, LangChain, Ollama, RAG  
+• Web: HTML/CSS/JS, Flask, Firebase  
+• ML/DL: TensorFlow, PyTorch, GEMMA, LoRA  
+• Tools: VS Code, Kaggle, Streamlit
+    `,
 
-  "what experience do you have as a kaggle expert?": `
+    "what experience do you have as a kaggle expert?": `
 🏅 **Kaggle Expert Experience**
 
-• Achieved **Kaggle Expert** title in **Datasets**, **Notebooks**, and **Discussions**  
-• Ranks: Top 400 in Datasets, Top 800 in Notebooks/Discussions (as of Feb 2025)  
-• Published high-quality, community-upvoted notebooks  
-• Actively participated in competitions and discussions  
-• Focused on NLP and vision use cases
-  `,
+• Titles in Datasets, Notebooks & Discussions  
+• Top 400 Datasets, Top 800 Notebooks  
+• High-quality notebooks & active competitions  
+• NLP and vision-focused
+    `,
 
-  "list your achievements.": `
+    "list your achievements.": `
 🎯 **Key Achievements**
 
-**📚 Academic**
-• Presented forest fire detection paper at ISMS 2025  
-• Presented LLM-in-healthcare abstract at PSC Conference 2025  
+📚 *Academics*  
+• ISMS forest fire detection paper  
+• PSC LLM-in-healthcare abstract  
 
-**🎓 Trainings**
-• ML/DL program at TIET (June–July 2023)  
-• ML program by 1Stop + Wissenaire, IIT Bhubaneswar (Feb–Mar 2024)  
+🎓 *Training*  
+• TIET ML/DL program  
+• IIT Bhubaneswar ML bootcamp  
 
-**🏆 Competitions**
-• MAKEATHON5 by Microsoft Learn Student Chapter  
-• 36-hour OWASP Hackathon on cybersecurity (TIET)
-  `
-};
-
+🏆 *Competitions*  
+• MAKEATHON5 (Microsoft Learn)  
+• 36h OWASP Cybersecurity Hackathon
+    `,
+  };
 
   async function askAssistant() {
     if (!question) return;
-
     const normalized = question.trim().toLowerCase();
 
-  // Check if predefined answer exists
-  if (predefinedAnswers[normalized]) {
-    setAnswer(predefinedAnswers[normalized]);
-    return;
-  }
-  
+    if (predefinedAnswers[normalized]) {
+      setAnswer(predefinedAnswers[normalized]);
+      return;
+    }
+
     setLoading(true);
     setAnswer('');
 
@@ -134,52 +123,72 @@ Hi there! As **Prathamjyot Singh**, I specialize in the following:
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-6">
-      <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
-        🤖 Ask My AI Portfolio
-      </h1>
-
-      <textarea
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-        className="w-full h-32 p-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none text-gray-800 dark:text-gray-100 dark:bg-gray-900"
-        placeholder="Ask about my skills, projects, research, or tools I've used..."
-      />
-
-      <button
-        onClick={askAssistant}
-        disabled={loading || !question}
-        className={`mt-4 px-5 py-2.5 text-white font-semibold rounded-md transition duration-200 ${
-          loading || !question
-            ? 'bg-blue-300 cursor-not-allowed'
-            : 'bg-blue-600 hover:bg-blue-700'
-        }`}
-      >
-        {loading ? 'Thinking...' : 'Ask'}
-      </button>
-
-      {/* Suggested Questions */}
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">Try asking:</h2>
-        <div className="flex flex-wrap gap-3">
-          {suggestions.map((sug, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleSuggestionClick(sug)}
-              className="bg-gray-100 dark:bg-gray-700 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-800 text-sm px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 transition"
-            >
-              {sug}
-            </button>
-          ))}
+    <section className="px-4 py-16 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 min-h-screen">
+      {/* Header */}
+      <div className="max-w-3xl mx-auto text-center mb-12 animate-fade-in">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-medium mb-6">
+          <Bot className="w-4 h-4" />
+          AI Assistant
         </div>
+
+        <h1 className="text-5xl font-extrabold text-gradient mb-6 leading-tight pb-1">
+          🤖 Ask My AI Portfolio
+        </h1>
+
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          Get instant, AI-powered answers about my skills, projects, research, and achievements.
+        </p>
       </div>
 
-      {answer && (
-        <div className="mt-8 p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md prose prose-blue dark:prose-invert max-w-none">
-          <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">💡 Answer</h2>
-          <ReactMarkdown>{answer}</ReactMarkdown>
+      {/* Chat UI */}
+      <div className="max-w-3xl mx-auto animate-slide-in-up space-y-8">
+        <textarea
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          className="w-full h-32 p-4 rounded-xl bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-700 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
+          placeholder="Ask about my skills, research, or experience..."
+        />
+
+        <button
+          onClick={askAssistant}
+          disabled={loading || !question}
+          className={`w-full py-3 text-white font-semibold rounded-xl transition duration-300 shadow-md ${
+            loading || !question
+              ? 'bg-blue-300 cursor-not-allowed'
+              : 'bg-blue-600 hover:bg-blue-700'
+          }`}
+        >
+          {loading ? 'Thinking...' : 'Ask'}
+        </button>
+
+        {/* Suggestions */}
+        <div>
+          <h2 className="text-lg font-semibold mb-3 text-gray-700 dark:text-gray-300">
+            💡 Try asking:
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {suggestions.map((sug, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSuggestionClick(sug)}
+                className="bg-gray-100 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-blue-100 dark:hover:bg-blue-800 transition-all"
+              >
+                {sug}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
-    </div>
+
+        {/* Answer */}
+        {answer && (
+          <div className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg prose prose-blue dark:prose-invert max-w-none animate-fade-in">
+            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+              💬 Response
+            </h2>
+            <ReactMarkdown>{answer}</ReactMarkdown>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

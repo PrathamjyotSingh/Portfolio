@@ -32,7 +32,7 @@ export const experience = [
     "Focused on creating a lightweight model suitable for low-resource, fire-prone environments where early detection is critical.",
     "Presented the work at ISMS 2024-25 (Feb 22–23, 2025).",
     "Published in SCOPUS-indexed Springer LNNS proceedings.",
-    "Authors: Prathamjyot Singh, Sanjeev Rao, Yugan Dhar, Moksh Sharma"
+    "Authors: Prathamjyot Singh, Dr. Sanjeev Rao, Yugan Dhar, Moksh Sharma"
   ]
 },
 {
@@ -43,7 +43,8 @@ export const experience = [
   description: [
     "Co-authored the paper *“AI-Driven Legal Summarization: A Hybrid Framework Integrating Automatic Speech Recognition, Diarization, and BART for Courtroom Proceedings,”* accepted for presentation at IC3 2025.",
     "Designed an end-to-end pipeline integrating ASR, speaker diarization, and transformer-based summarization to automate legal documentation.",
-    "The paper was accepted among the top 35% of submissions and will be published in the IEEE Xplore digital library."
+    "The paper was accepted among the top 35% of submissions and will be published in the IEEE Xplore digital library.",
+    "Authors: Prathamjyot Singh, Dr. Sanjeev Rao, Dr. Jasmeet Singh, Yugan Dhar, Moksh Sharma, Pranav Chawla"
   ]
 }
 
@@ -59,7 +60,8 @@ export const projects = [
       "Developed full-stack app for coding competitions with team features.",
       "Used Firebase Auth, Firestore, real-time chat, and email notifications.",
       "Built role-based UI dashboard for contest and team management."
-    ]
+    ],
+    demo:"",
   },
   {
     title: "LLM-Based Research Paper Summarizer",
@@ -70,7 +72,8 @@ export const projects = [
       "Built a summarizer using fine-tuned GEMMA with LoRA and 4-bit/8-bit quantization.",
       "Parsed PDFs using PyMuPDF and applied Transformer-based summarization.",
       "Deployed with Streamlit for real-time interaction."
-    ]
+    ],
+    demo:"",
   },
   {
     title: "Brain Tumor Segmentation using Hybrid Deep Learning",
@@ -81,7 +84,8 @@ export const projects = [
       "Integrated Transformer + CBAM for high-accuracy brain tumor segmentation.",
       "Used BraTS dataset and achieved >99% classification accuracy.",
       "Currently drafting a research paper on results."
-    ]
+    ],
+    demo:"",
   },
   {
     title: "AI-Powered Courtroom Monitoring System",
@@ -92,7 +96,9 @@ export const projects = [
       "Developed real-time system using ASR + BART for legal summarization.",
       "Used AssemblyAI for speaker diarization and transcript structuring.",
       "Enabled efficient summarization and archiving of courtroom audio."
-    ]
+    ],
+    github:"",
+    demo:"",
   }
 ];
 
