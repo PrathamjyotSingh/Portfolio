@@ -247,17 +247,19 @@ ${prompt}
 `;
 
   try {
-    if (process.env.NODE_ENV === 'development') {
-      // 🧠 Local Mistral via Ollama
-      const ollamaRes = await fetch('http://localhost:11434/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'mistral',
-          prompt: fullContext,
-          stream: false
-        })
-      });
+    const isLocal = process.env.VERCEL !== '1'; // True only in development
+
+  if (isLocal) {
+    // 🧠 Local Mistral via Ollama
+    const ollamaRes = await fetch('http://localhost:11434/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'mistral',
+        prompt: fullContext,
+        stream: false
+      })
+    });
       const data = await ollamaRes.json();
       return res.status(200).json({ answer: data.response });
     } else {
