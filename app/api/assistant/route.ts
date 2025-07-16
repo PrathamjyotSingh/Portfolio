@@ -124,6 +124,7 @@ ${prompt}
     ]);
 
     const hfData = await hfRes.json();
+    console.log('🔍 Hugging Face Response:', hfData);
 
     let answer = '';
     if (Array.isArray(hfData) && hfData[0]?.generated_text) {
