@@ -16,6 +16,7 @@ export default function AssistantPage() {
     "Which tools or frameworks do you use?",
     "What experience do you have as a Kaggle Expert?",
     "List your achievements.",
+    'how can i contact you?',
   ];
 
   const predefinedAnswers: Record<string, string> = {
@@ -151,13 +152,7 @@ Large Language Models (LLMs), Generative AI, Machine Learning, Deep Learning, NL
       return;
     }
     if (normalized.includes('contact')) {
-      setAnswer(`
-📫 **Contact Info**
-
-• Email: prathamjyotsingh@gmail.com  
-• GitHub: [@prathamcodes](https://github.com/prathamcodes)  
-• LinkedIn: [Prathamjyot Singh](https://linkedin.com/in/prathamjyotsingh)  
-      `);
+      setAnswer(predefinedAnswers[key]);
       return;
     }
   }
