@@ -127,15 +127,22 @@ ${prompt}
     console.log('🔍 Hugging Face Response:', hfData);
 
     let answer = '';
-    if (Array.isArray(hfData) && hfData[0]?.generated_text) {
-      answer = hfData[0].generated_text;
-    } else if (hfData.generated_text) {
-      answer = hfData.generated_text;
-    } else if (hfData.error) {
-      throw new Error(`HF Model Error: ${hfData.error}`);
-    } else {
-      answer = 'I received an unexpected response format. Please try again.';
-    }
+if (Array.isArray(hfData) && hfData[0]?.generated_text) {
+  answer = hfData[0].generated_text;
+} else if (hfData?.generated_text) {
+  answer = hfData.generated_text;
+} else if (Array.isArray(hfData) && hfData[0]?.generated_text === undefined && hfData[0]?.output) {
+  // For T5 models like flan-t5-large
+  answer = hfData[0]?.output;
+} else if (Array.isArray(hfData) && hfData[0]?.generated_text === undefined && hfData[0]?.generated_text === undefined) {
+  // Try fallback for generic model outputs
+  answer = hfData[0]?.text || 'No generated text in model response';
+} else if (hfData.error) {
+  throw new Error(`HF Model Error: ${hfData.error}`);
+} else {
+  answer = 'I received an unexpected response format. Please try again.';
+}
+
 
     return Response.json({ answer });
   } catch (err: any) {
