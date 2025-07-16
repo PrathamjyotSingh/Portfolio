@@ -57,6 +57,9 @@ function getRelevantContext(prompt?: string) {
 
 export async function POST(req: NextRequest): Promise<Response> {
   try {
+    console.log('HF KEY:', process.env.HUGGINGFACE_API_KEY?.slice(0, 10));
+
+
     const body = await req.json();
     const prompt = body?.prompt;
 
@@ -122,9 +125,7 @@ ${prompt}
         setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out')), 30000)
       ),
     ]);
-    console.log('HF KEY:', process.env.HUGGINGFACE_API_KEY?.slice(0, 10));
-
-
+    
     const hfData = await hfRes.json();
     console.log('🔍 Hugging Face Response:', hfData);
 
