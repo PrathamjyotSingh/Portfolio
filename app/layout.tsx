@@ -88,7 +88,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   <a href="/skills" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     Skills
                   </a>
-                  <a href="/chat" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <a href="/assistant" className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     AI Assistant
                   </a>
                 </div>
