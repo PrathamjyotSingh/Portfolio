@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 // import { education, experience, projects, skills, achievements, contact } from '@/lib/data';
-
+export const runtime = 'nodejs'; // or 'edge' if not using Node.js-only features
 export const education = [
   {
     institution: "Thapar Institute of Engineering and Technology",
