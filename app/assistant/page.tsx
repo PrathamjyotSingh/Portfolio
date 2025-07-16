@@ -19,80 +19,100 @@ export default function AssistantPage() {
   ];
 
   const predefinedAnswers: Record<string, string> = {
-    "what are your key skills?": `
-Hi there! As **Prathamjyot Singh**, I specialize in the following:
+  "what are your key skills?": `
+Hi there! I'm **Prathamjyot Singh**, and here are my core skills:
 
-**🧑‍💻 Programming Languages:** Python, TensorFlow, PyTorch, C++, C, HTML/CSS, JavaScript, SQL  
-**🛠️ Tools and Frameworks:** Kaggle, Ollama, LangChain, RAG, Hugging Face, Msty, VS Code, Jupyter Notebook, Firebase, MATLAB  
-**📌 Domain Expertise:** Large Language Models (LLMs), Generative AI, Machine Learning, Deep Learning, NLP, Web Dev, DSA
-    `,
+**🧑‍💻 Programming Languages:**  
+Python, C++, C, JavaScript, HTML/CSS, SQL, TensorFlow, PyTorch
 
-    "tell me about your projects.": `
+**🛠️ Tools & Frameworks:**  
+Kaggle, Ollama, LangChain, RAG, Hugging Face, Firebase, Streamlit, MATLAB, Msty, VS Code, Jupyter Notebook
+
+**📌 Domain Expertise:**  
+Large Language Models (LLMs), Generative AI, Machine Learning, Deep Learning, NLP, Web Development, Data Structures and Algorithms
+`,
+
+  "tell me about your projects.": `
 🚀 **Highlighted Projects**
 
 1. **RecruitMate – Competitive Coding Platform**  
-   • Full-stack app with team management for coding contests  
-   • Firebase Auth, Firestore, chat, and email notifications  
+   • Full-stack app for managing coding contests and teams  
+   • Firebase Auth, Firestore, real-time chat, role-based UI  
 
 2. **LLM-Based Research Paper Summarizer**  
-   • Fine-tuned GEMMA + LoRA + quantization  
-   • Summarization with PyMuPDF + Streamlit  
+   • Built with fine-tuned GEMMA + LoRA, quantized for efficiency  
+   • Uses PyMuPDF for parsing, deployed with Streamlit  
 
-3. **Brain Tumor Segmentation**  
-   • Transformer + CBAM hybrid  
-   • >99% accuracy on BraTS  
+3. **Brain Tumor Segmentation using Hybrid Deep Learning**  
+   • Combines Transformer + CBAM for >99% accuracy on BraTS  
+   • Research paper in progress  
 
-4. **Courtroom Monitoring System**  
-   • Real-time ASR + BART for legal audio  
-   • Transcript archival + speaker diarization
-    `,
+4. **AI-Powered Courtroom Monitoring System**  
+   • Real-time ASR + BART summarization of legal audio  
+   • Speaker diarization, transcript archival & structuring
+`,
 
-    "what research have you published?": `
+  "what research have you published?": `
 🧠 **Research Publications**
 
 1. 📄 *AI-Driven Legal Summarization* — **IC3 2025**  
-   • ASR + diarization + BART for courtroom proceedings  
-   • Accepted to IEEE Xplore
+   • ASR + speaker diarization + BART for legal automation  
+   • Accepted to IEEE Xplore (top 35% submissions)  
+   • Authors: Prathamjyot Singh, Dr. Sanjeev Rao, Dr. Jasmeet Singh, Yugan Dhar, Moksh Sharma, Pranav Chawla
 
 2. 🔥 *Forest Fire Detection Using MobileNetV2* — **ISMS 2025**  
-   • SCOPUS-indexed Springer LNNS  
-   • Lightweight DL for resource-limited areas
-    `,
+   • Lightweight DL for low-resource environments  
+   • Published in SCOPUS-indexed Springer LNNS  
+   • Authors: Prathamjyot Singh, Dr. Sanjeev Rao, Yugan Dhar, Moksh Sharma
+`,
 
-    "which tools or frameworks do you use?": `
-🧰 **Tools I Use**
+  "which tools or frameworks do you use?": `
+🧰 **Tools & Frameworks I Use**
 
-• LLM: Hugging Face, LangChain, Ollama, RAG  
-• Web: HTML/CSS/JS, Flask, Firebase  
-• ML/DL: TensorFlow, PyTorch, GEMMA, LoRA  
-• Tools: VS Code, Kaggle, Streamlit
-    `,
+• **LLM/AI:** Hugging Face, LangChain, Ollama, RAG, GEMMA, LoRA  
+• **Web/Apps:** Flask, Firebase, HTML/CSS/JS, Streamlit  
+• **ML/DL:** TensorFlow, PyTorch, Transformers, CBAM  
+• **Other Tools:** Kaggle, MATLAB, Msty, VS Code, Jupyter Notebook
+`,
 
-    "what experience do you have as a kaggle expert?": `
+  "what experience do you have as a kaggle expert?": `
 🏅 **Kaggle Expert Experience**
 
-• Titles in Datasets, Notebooks & Discussions  
-• Top 400 Datasets, Top 800 Notebooks  
-• High-quality notebooks & active competitions  
-• NLP and vision-focused
-    `,
+• Earned Expert titles in Datasets, Notebooks & Discussions  
+• Top 400 in Datasets, Top 800 in Notebooks & Discussions  
+• Active contributor to the ML community with notebooks & kernels  
+• Focus on NLP, vision, and reproducible research
+`,
 
-    "list your achievements.": `
+  "list your achievements.": `
 🎯 **Key Achievements**
 
-📚 *Academics*  
-• ISMS forest fire detection paper  
-• PSC LLM-in-healthcare abstract  
+📚 *Academic & Research*  
+• Research paper on forest fire detection presented at ISMS 2025  
+• Abstract on LLMs in healthcare presented at PSC 2025  
 
-🎓 *Training*  
-• TIET ML/DL program  
-• IIT Bhubaneswar ML bootcamp  
+🎓 *Training Programs*  
+• TIET ML/DL 6-week training program  
+• IIT Bhubaneswar 2-month ML bootcamp  
 
-🏆 *Competitions*  
-• MAKEATHON5 (Microsoft Learn)  
-• 36h OWASP Cybersecurity Hackathon
-    `,
-  };
+🏆 *Hackathons & Competitions*  
+• Finalist at MAKEATHON5 by Microsoft Learn  
+• 36-hour OWASP Hackathon on cybersecurity and innovation
+`,
+
+  "how can i contact you?": `
+📫 **Contact Info**
+
+• 📧 Email: [jyotpratham@gmail.com](mailto:jyotpratham@gmail.com)  
+• 📱 Phone: +91-9988144169  
+
+🌐 **Socials:**  
+• [LinkedIn](https://linkedin.com/in/prathamjyot-singh-875538250/)  
+• [GitHub](https://github.com/PrathamjyotSingh)  
+• [Kaggle](https://www.kaggle.com/prathamjyotsingh)
+`
+};
+
 
   async function askAssistant() {
   if (!question) return;
