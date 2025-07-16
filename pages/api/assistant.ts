@@ -136,7 +136,7 @@ export const contact = {
 };
 
 // Use a more reliable model that's guaranteed to be available
-const modelId = process.env.MODEL_ID || "microsoft/DialoGPT-medium";
+const modelId = process.env.MODEL_ID || "gpt2";
 
 function getRelevantContext(prompt?: string) {
   if (!prompt) return 'No relevant context provided.';
