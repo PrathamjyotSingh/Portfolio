@@ -122,6 +122,8 @@ ${prompt}
         setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out')), 30000)
       ),
     ]);
+    console.log('HF KEY:', process.env.HUGGINGFACE_API_KEY?.slice(0, 10));
+
 
     const hfData = await hfRes.json();
     console.log('🔍 Hugging Face Response:', hfData);
