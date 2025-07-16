@@ -13,7 +13,7 @@ export const metadata = {
   keywords: 'AI, Machine Learning, Computer Engineering, Portfolio, Kaggle Expert, Next.js, React',
   authors: [{ name: 'Prathamjyot Singh' }],
   creator: 'Prathamjyot Singh',
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://portfolio-rouge-xi-32.vercel.app'),
   openGraph: {
     title: 'AI Portfolio — Prathamjyot Singh',
     description: 'Interactive resume with Mistral assistant - Computer Engineering student, Kaggle Expert, and AI researcher.',
