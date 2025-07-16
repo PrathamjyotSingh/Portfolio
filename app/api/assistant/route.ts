@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { education, experience, projects, skills, achievements, contact } from '@/lib/data';
 
-const modelId = process.env.MODEL_ID || 'google/flan-t5-large';
+const modelId = process.env.MODEL_ID || 'google/gemma-2-9b-it';
 
 function getRelevantContext(prompt?: string) {
   if (!prompt) return 'No relevant context provided.';
