@@ -151,7 +151,7 @@ Large Language Models (LLMs), Generative AI, Machine Learning, Deep Learning, NL
       setAnswer(predefinedAnswers[key]);
       return;
     }
-    if (normalized.includes('contact')) {
+    if (normalized.includes('contact')&& key.includes('achievement')) {
       setAnswer(predefinedAnswers[key]);
       return;
     }
