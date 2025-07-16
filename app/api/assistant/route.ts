@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { education, experience, projects, skills, achievements, contact } from '@/lib/data';
 
-const modelId = process.env.MODEL_ID || 'google/gemma-2-9b-it';
+const modelId = process.env.MODEL_ID || 'microsoft/DialoGPT-medium';
 
 function getRelevantContext(prompt?: string) {
   if (!prompt) return 'No relevant context provided.';
@@ -57,8 +57,20 @@ function getRelevantContext(prompt?: string) {
 
 export async function POST(req: NextRequest): Promise<Response> {
   try {
-    console.log('HF KEY:', process.env.HUGGINGFACE_API_KEY?.slice(0, 10));
+    // Validate environment variables
+    if (!process.env.HUGGINGFACE_API_KEY) {
+      console.error('❌ HUGGINGFACE_API_KEY not found in environment variables');
+      return new Response(JSON.stringify({ 
+        error: 'Configuration error: Missing API key' 
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
+    console.log('✅ HF KEY found:', process.env.HUGGINGFACE_API_KEY?.slice(0, 10) + '...');
+    console.log('✅ Model ID:', modelId);
+    console.log('✅ Environment:', process.env.NODE_ENV);
 
     const body = await req.json();
     const prompt = body?.prompt;
@@ -87,28 +99,42 @@ ${relevantContext}
 ${prompt}
 `;
 
-    const isLocal = process.env.VERCEL !== '1';
+    const isLocal = process.env.VERCEL !== '1' && process.env.NODE_ENV === 'development';
 
     if (isLocal) {
-      const ollamaRes = await fetch('http://localhost:11434/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'mistral',
-          prompt: fullContext,
-          stream: false,
-        }),
-      });
-      const data = await ollamaRes.json();
-      return Response.json({ answer: data.response });
+      try {
+        const ollamaRes = await fetch('http://localhost:11434/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'mistral',
+            prompt: fullContext,
+            stream: false,
+          }),
+        });
+        
+        if (!ollamaRes.ok) {
+          throw new Error(`Ollama API error: ${ollamaRes.status}`);
+        }
+        
+        const data = await ollamaRes.json();
+        return Response.json({ answer: data.response });
+      } catch (ollamaError) {
+        console.error('❌ Ollama error, falling back to HF:', ollamaError);
+        // Fall through to HF API
+      }
     }
 
+    // Hugging Face API call with better error handling
+    console.log('🚀 Making HF API request...');
+    
     const hfRes = await Promise.race([
       fetch(`https://api-inference.huggingface.co/models/${modelId}`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+          'Authorization': `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
           'Content-Type': 'application/json',
+          'User-Agent': 'NextJS-Portfolio-Assistant/1.0'
         },
         body: JSON.stringify({
           inputs: fullContext,
@@ -117,42 +143,103 @@ ${prompt}
             temperature: 0.7,
             top_p: 0.9,
             return_full_text: false,
+            do_sample: true,
+            repetition_penalty: 1.1
           },
-          options: { wait_for_model: true },
+          options: { 
+            wait_for_model: true,
+            use_cache: false
+          },
         }),
       }),
       new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out')), 30000)
+        setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out (30s)')), 30000)
       ),
     ]);
     
+    console.log('📡 HF Response status:', hfRes.status);
+    console.log('📡 HF Response headers:', Object.fromEntries(hfRes.headers.entries()));
+    
+    if (!hfRes.ok) {
+      const errorText = await hfRes.text();
+      console.error('❌ HF API Error Response:', errorText);
+      
+      // Handle specific HF errors
+      if (hfRes.status === 503) {
+        return Response.json({ 
+          error: 'AI model is currently loading. Please try again in a moment.' 
+        }, { status: 503 });
+      }
+      
+      if (hfRes.status === 429) {
+        return Response.json({ 
+          error: 'Rate limit exceeded. Please try again later.' 
+        }, { status: 429 });
+      }
+      
+      throw new Error(`HF API Error ${hfRes.status}: ${errorText}`);
+    }
+
     const hfData = await hfRes.json();
-    console.log('🔍 Hugging Face Response:', hfData);
+    console.log('🔍 Hugging Face Response:', JSON.stringify(hfData, null, 2));
 
     let answer = '';
-if (Array.isArray(hfData) && hfData[0]?.generated_text) {
-  answer = hfData[0].generated_text;
-} else if (hfData?.generated_text) {
-  answer = hfData.generated_text;
-} else if (Array.isArray(hfData) && hfData[0]?.generated_text === undefined && hfData[0]?.output) {
-  // For T5 models like flan-t5-large
-  answer = hfData[0]?.output;
-} else if (Array.isArray(hfData) && hfData[0]?.generated_text === undefined && hfData[0]?.generated_text === undefined) {
-  // Try fallback for generic model outputs
-  answer = hfData[0]?.text || 'No generated text in model response';
-} else if (hfData.error) {
-  throw new Error(`HF Model Error: ${hfData.error}`);
-} else {
-  answer = 'I received an unexpected response format. Please try again.';
-}
+    
+    // Handle different response formats
+    if (Array.isArray(hfData) && hfData.length > 0) {
+      const firstResult = hfData[0];
+      
+      if (firstResult.generated_text) {
+        answer = firstResult.generated_text;
+      } else if (firstResult.output) {
+        // For T5 models
+        answer = firstResult.output;
+      } else if (firstResult.text) {
+        // Generic text field
+        answer = firstResult.text;
+      } else {
+        console.error('❌ Unexpected response format:', firstResult);
+        answer = 'I received an unexpected response format. Please try again.';
+      }
+    } else if (hfData.generated_text) {
+      answer = hfData.generated_text;
+    } else if (hfData.error) {
+      console.error('❌ HF Model Error:', hfData.error);
+      
+      // Handle model loading errors
+      if (hfData.error.includes('loading')) {
+        return Response.json({ 
+          error: 'AI model is currently loading. Please try again in a moment.' 
+        }, { status: 503 });
+      }
+      
+      throw new Error(`HF Model Error: ${hfData.error}`);
+    } else {
+      console.error('❌ Unknown response format:', hfData);
+      answer = 'I received an unexpected response format. Please try again.';
+    }
 
+    // Clean up the response
+    answer = answer.trim();
+    
+    if (!answer) {
+      return Response.json({ 
+        error: 'No response generated. Please try rephrasing your question.' 
+      }, { status: 500 });
+    }
 
+    console.log('✅ Final answer:', answer.slice(0, 100) + '...');
+    
     return Response.json({ answer });
+    
   } catch (err: any) {
     console.error('❌ Error in /api/assistant:', err);
+    console.error('❌ Stack trace:', err.stack);
+    
     return new Response(JSON.stringify({
       error: 'AI service temporarily unavailable',
-      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined,
+      timestamp: new Date().toISOString()
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

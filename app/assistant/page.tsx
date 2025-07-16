@@ -95,17 +95,58 @@ Hi there! As **Prathamjyot Singh**, I specialize in the following:
   };
 
   async function askAssistant() {
-    if (!question) return;
-    const normalized = question.trim().toLowerCase();
+  if (!question) return;
+  const normalized = question.trim().toLowerCase();
 
-    if (predefinedAnswers[normalized]) {
-      setAnswer(predefinedAnswers[normalized]);
+  if (predefinedAnswers[normalized]) {
+    setAnswer(predefinedAnswers[normalized]);
+    return;
+  }
+
+  // 🔍 Keyword-based fallback
+  const keywords = Object.keys(predefinedAnswers);
+  for (const key of keywords) {
+    if (normalized.includes('skill') && key.includes('skill')) {
+      setAnswer(predefinedAnswers[key]);
       return;
     }
+    if (normalized.includes('project') && key.includes('project')) {
+      setAnswer(predefinedAnswers[key]);
+      return;
+    }
+    if (normalized.includes('research') && key.includes('research')) {
+      setAnswer(predefinedAnswers[key]);
+      return;
+    }
+    if (normalized.includes('tool') && key.includes('tool')) {
+      setAnswer(predefinedAnswers[key]);
+      return;
+    }
+    if (normalized.includes('kaggle') && key.includes('kaggle')) {
+      setAnswer(predefinedAnswers[key]);
+      return;
+    }
+    if (normalized.includes('achievement') && key.includes('achievement')) {
+      setAnswer(predefinedAnswers[key]);
+      return;
+    }
+    if (normalized.includes('contact')) {
+      setAnswer(`
+📫 **Contact Info**
 
-    setLoading(true);
-    setAnswer('');
+• Email: prathamjyotsingh@gmail.com  
+• GitHub: [@prathamcodes](https://github.com/prathamcodes)  
+• LinkedIn: [Prathamjyot Singh](https://linkedin.com/in/prathamjyotsingh)  
+      `);
+      return;
+    }
+  }
 
+  // ❓ No match: call API
+  setLoading(true);
+  setAnswer('');
+
+  try {
     const res = await fetch('/api/assistant', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -114,8 +155,12 @@ Hi there! As **Prathamjyot Singh**, I specialize in the following:
 
     const data = await res.json();
     setAnswer(data.answer || 'No answer found');
+  } catch (err) {
+    setAnswer('⚠️ Failed to fetch response. Please try again later.');
+  } finally {
     setLoading(false);
   }
+}
 
   function handleSuggestionClick(suggested: string) {
     setQuestion(suggested);
