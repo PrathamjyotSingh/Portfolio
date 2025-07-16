@@ -247,7 +247,7 @@ ${prompt}
 `;
 
   try {
-    const isLocal = process.env.VERCEL !== '1'; // True only in development
+  const isLocal = process.env.VERCEL !== '1'; // True only in development
 
   if (isLocal) {
     // 🧠 Local Mistral via Ollama
@@ -260,14 +260,16 @@ ${prompt}
         stream: false
       })
     });
-      const data = await ollamaRes.json();
-      return res.status(200).json({ answer: data.response });
-    } else {
-      // 🌐 Production: Better error handling and model selection
-      console.log('🔑 Using MODEL_ID:', modelId);
-      console.log('🔑 HF API Key exists:', !!process.env.HUGGINGFACE_API_KEY);
-      
-      const hfRes = await fetch(`https://api-inference.huggingface.co/models/${modelId}`, {
+    const data = await ollamaRes.json();
+    return res.status(200).json({ answer: data.response });
+
+  } else {
+    // 🌐 Production: Use Hugging Face with timeout
+    console.log('🔑 Using MODEL_ID:', modelId);
+    console.log('🔑 HF API Key exists:', !!process.env.HUGGINGFACE_API_KEY);
+
+    const fetchWithTimeout = Promise.race([
+      fetch(`https://api-inference.huggingface.co/models/${modelId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
@@ -282,46 +284,51 @@ ${prompt}
             return_full_text: false
           },
           options: {
-            wait_for_model: true // Important: Wait for model to load
+            wait_for_model: true
           }
         })
-      });
+      }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out')), 15000)
+      )
+    ]);
 
-      console.log('🔍 HF Response Status:', hfRes.status);
-      
-      if (!hfRes.ok) {
-        const errorText = await hfRes.text();
-        console.error('❌ HF API Error:', errorText);
-        throw new Error(`HF API Error: ${hfRes.status} - ${errorText}`);
-      }
+    const hfRes = await fetchWithTimeout;
 
-      const hfData = await hfRes.json();
-      console.log('📊 HF Response:', hfData);
-      
-      // Handle different response formats
-      let answer = '';
-      if (Array.isArray(hfData) && hfData[0]?.generated_text) {
-        answer = hfData[0].generated_text;
-      } else if (hfData.generated_text) {
-        answer = hfData.generated_text;
-      } else if (hfData.error) {
-        throw new Error(`HF Model Error: ${hfData.error}`);
-      } else {
-        console.warn('⚠️ Unexpected HF response format:', hfData);
-        answer = 'I apologize, but I received an unexpected response format. Please try again.';
-      }
-      
-      return res.status(200).json({ answer });
+    console.log('🔍 HF Response Status:', hfRes.status);
+
+    if (!hfRes.ok) {
+      const errorText = await hfRes.text();
+      console.error('❌ HF API Error:', errorText);
+      throw new Error(`HF API Error: ${hfRes.status} - ${errorText}`);
     }
-  } catch (err) {
-    console.error('❌ Error in assistant API:', err);
-    
-    // Return a helpful error message instead of generic one
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
-    
-    return res.status(500).json({ 
-      error: 'AI service temporarily unavailable',
-      details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
-    });
+
+    const hfData = await hfRes.json();
+    console.log('📊 HF Response:', hfData);
+
+    let answer = '';
+    if (Array.isArray(hfData) && hfData[0]?.generated_text) {
+      answer = hfData[0].generated_text;
+    } else if (hfData.generated_text) {
+      answer = hfData.generated_text;
+    } else if (hfData.error) {
+      throw new Error(`HF Model Error: ${hfData.error}`);
+    } else {
+      console.warn('⚠️ Unexpected HF response format:', hfData);
+      answer = 'I apologize, but I received an unexpected response format. Please try again.';
+    }
+
+    return res.status(200).json({ answer });
   }
+} catch (err) {
+  console.error('❌ Error in assistant API:', err);
+
+  const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+
+  return res.status(500).json({
+    error: 'AI service temporarily unavailable',
+    details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+  });
+}
+
 }
