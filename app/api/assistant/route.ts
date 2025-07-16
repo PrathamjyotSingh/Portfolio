@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server';
 import { education, experience, projects, skills, achievements, contact } from '@/lib/data';
 
-export const runtime = 'nodejs';
 export async function POST(req: NextRequest) {
   return Response.json({ answer: '✅ Route working' });
 }
