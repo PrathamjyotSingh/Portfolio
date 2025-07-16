@@ -1,6 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { education, experience, projects, skills, achievements,contact } from '@/lib/data';
-const modelId = process.env.MODEL_ID || "google/gemma-7b-it";
+import { education, experience, projects, skills, achievements, contact } from '@/lib/data';
+
+// Use a more reliable model that's guaranteed to be available
+const modelId = process.env.MODEL_ID || "microsoft/DialoGPT-medium";
+
 function getRelevantContext(prompt?: string) {
   if (!prompt) return 'No relevant context provided.';
 
@@ -14,7 +17,9 @@ function getRelevantContext(prompt?: string) {
       `- ${e.degree} at ${e.institution}, ${e.location} (${e.duration}), CGPA: ${e.cgpa}`
     ).join('\n') + '\n\n';
   }
-if (
+
+  // Contact
+  if (
     query.includes('contact') ||
     query.includes('social') ||
     query.includes('email') ||
@@ -32,6 +37,7 @@ if (
     }
     context += '\n';
   }
+
   // Experience
   if (
     query.includes('experience') ||
@@ -77,13 +83,9 @@ if (
   return context || 'No relevant context matched the query.';
 }
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const prompt = req.body?.prompt;
-  if (process.env.NODE_ENV === 'development') {
-  console.log("🔑 MODEL_ID:", process.env.MODEL_ID);
-}
-
+  
   if (!prompt || typeof prompt !== 'string') {
     return res.status(400).json({ error: 'Missing or invalid prompt' });
   }
@@ -125,7 +127,10 @@ ${prompt}
       const data = await ollamaRes.json();
       return res.status(200).json({ answer: data.response });
     } else {
-      // 🌐 Production: Gemma via Hugging Face
+      // 🌐 Production: Better error handling and model selection
+      console.log('🔑 Using MODEL_ID:', modelId);
+      console.log('🔑 HF API Key exists:', !!process.env.HUGGINGFACE_API_KEY);
+      
       const hfRes = await fetch(`https://api-inference.huggingface.co/models/${modelId}`, {
         method: 'POST',
         headers: {
@@ -135,18 +140,52 @@ ${prompt}
         body: JSON.stringify({
           inputs: fullContext,
           parameters: {
-            max_new_tokens: 256,
+            max_new_tokens: 300,
+            temperature: 0.7,
+            top_p: 0.9,
             return_full_text: false
+          },
+          options: {
+            wait_for_model: true // Important: Wait for model to load
           }
         })
       });
 
+      console.log('🔍 HF Response Status:', hfRes.status);
+      
+      if (!hfRes.ok) {
+        const errorText = await hfRes.text();
+        console.error('❌ HF API Error:', errorText);
+        throw new Error(`HF API Error: ${hfRes.status} - ${errorText}`);
+      }
+
       const hfData = await hfRes.json();
-      const answer = hfData?.[0]?.generated_text || 'No response';
+      console.log('📊 HF Response:', hfData);
+      
+      // Handle different response formats
+      let answer = '';
+      if (Array.isArray(hfData) && hfData[0]?.generated_text) {
+        answer = hfData[0].generated_text;
+      } else if (hfData.generated_text) {
+        answer = hfData.generated_text;
+      } else if (hfData.error) {
+        throw new Error(`HF Model Error: ${hfData.error}`);
+      } else {
+        console.warn('⚠️ Unexpected HF response format:', hfData);
+        answer = 'I apologize, but I received an unexpected response format. Please try again.';
+      }
+      
       return res.status(200).json({ answer });
     }
   } catch (err) {
-    console.error('Error in assistant API:', err);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error('❌ Error in assistant API:', err);
+    
+    // Return a helpful error message instead of generic one
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+    
+    return res.status(500).json({ 
+      error: 'AI service temporarily unavailable',
+      details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
+    });
   }
 }
