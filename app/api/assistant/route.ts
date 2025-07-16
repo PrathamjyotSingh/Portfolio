@@ -121,7 +121,7 @@ ${prompt}
         }),
       }),
       new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out')), 15000)
+        setTimeout(() => reject(new Error('⏰ Hugging Face API request timed out')), 30000)
       ),
     ]);
 
