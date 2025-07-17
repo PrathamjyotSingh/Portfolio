@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'AI Portfolio — Prathamjyot Singh',
+  icons: {
+    icon: "/favicon.png", // or "/favicon.png"
+  },
   description: 'Interactive resume with Mistral assistant - Computer Engineering student, Kaggle Expert, and AI researcher.',
   keywords: 'AI, Machine Learning, Computer Engineering, Portfolio, Kaggle Expert, Next.js, React',
   authors: [{ name: 'Prathamjyot Singh' }],
