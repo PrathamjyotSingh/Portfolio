@@ -24,7 +24,7 @@ export const metadata = {
     siteName: 'Prathamjyot Singh Portfolio',
     images: [
       {
-        url: '/uploads/profile.jpg',
+        url: 'https://portfolio-rouge-xi-32.vercel.app/uploads/profile.jpg',
         width: 1200,
         height: 630,
         alt: 'Prathamjyot Singh - AI Portfolio',
