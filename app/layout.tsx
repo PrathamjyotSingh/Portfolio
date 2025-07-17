@@ -20,7 +20,7 @@ export const metadata = {
   openGraph: {
     title: 'AI Portfolio — Prathamjyot Singh',
     description: 'Interactive resume with Mistral assistant - Computer Engineering student, Kaggle Expert, and AI researcher.',
-    url: 'https://prathamjyot.dev',
+    url: 'https://portfolio-rouge-xi-32.vercel.app/',
     siteName: 'Prathamjyot Singh Portfolio',
     images: [
       {
